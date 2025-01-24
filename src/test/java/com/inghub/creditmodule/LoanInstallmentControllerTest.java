@@ -50,11 +50,4 @@ class LoanInstallmentControllerTest {
         verify(loanInstallmentService, times(1)).findByLoanId(loanId);
     }
 
-    @Test
-    void testFindAllLoanInstallments() throws Exception {
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/loanInstallment/findAll")).andExpect(status().isOk()) ;
-
-        verify(loanInstallmentService, times(1)).findAllLoanInstallments();
-    }
 }

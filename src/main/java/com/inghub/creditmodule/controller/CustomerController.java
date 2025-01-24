@@ -29,16 +29,9 @@ public class CustomerController {
 
 
     @GetMapping("/find/{customerId}")
-    public ResponseEntity<Customer> findCustomer(@PathVariable Long customerId) throws Exception {
+    public ResponseEntity<Customer> findCustomer(@PathVariable Long customerId)  {
         log.info("Fetching  customer: {}", customerId);
         return ResponseEntity.ok(customerService.findCustomer(customerId));
     }
-
-    @GetMapping("/findAll")
-    public ResponseEntity<List<Customer>> findAllCustomer() throws Exception {
-        log.info("Fetching  all customers");
-        return ResponseEntity.ok(customerService.findAllCustomer());
-    }
-
 
 }

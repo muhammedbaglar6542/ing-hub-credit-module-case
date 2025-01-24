@@ -35,26 +35,6 @@
 						"header": []
 					},
 					"response": []
-				},
-				{
-					"name": "findAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8090/api/customer/findAll",
-							"host": [
-								"localhost"
-							],
-							"port": "8090",
-							"path": [
-								"api",
-								"customer",
-								"findAll"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -122,26 +102,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "findAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8090/api/loan/findAll",
-							"host": [
-								"localhost"
-							],
-							"port": "8090",
-							"path": [
-								"api",
-								"loan",
-								"findAll"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -185,26 +145,6 @@
 								"loanInstallment",
 								"findByLoan",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "findAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:8090/api/loanInstallment/findAll",
-							"host": [
-								"localhost"
-							],
-							"port": "8090",
-							"path": [
-								"api",
-								"loanInstallment",
-								"findAll"
 							]
 						}
 					},

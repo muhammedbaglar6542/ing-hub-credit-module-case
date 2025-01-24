@@ -1,5 +1,6 @@
 package com.inghub.creditmodule.service;
 
+import com.inghub.creditmodule.exceptions.CustomerNotFoundException;
 import com.inghub.creditmodule.model.Customer;
 import com.inghub.creditmodule.repository.CustomerRepository;
 import com.inghub.creditmodule.request.CustomerRequest;
@@ -19,17 +20,14 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
-    public Customer findCustomer(Long customerId) throws Exception {
+    public Customer findCustomer(Long customerId)   {
         Optional<Customer> customer = customerRepository.findByCustomerId(customerId);
         if (customer.isEmpty()) {
-            throw new Exception("Customer not found!");
+            throw new CustomerNotFoundException();
         }
 
         return customer.get();
 
     }
 
-    public List<Customer> findAllCustomer() {
-        return customerRepository.findAll();
-    }
 }

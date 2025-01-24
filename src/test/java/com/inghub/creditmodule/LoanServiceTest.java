@@ -76,7 +76,7 @@ class LoanServiceTest {
     }
 
     @Test
-    void testCreateLoan() throws Exception {
+    void testCreateLoan()  {
         when(customerService.findCustomer(loanRequest.getCustomerId())).thenReturn(customer);
         when(loanRepository.save(any(Loan.class))).thenReturn(loan);
 
@@ -89,7 +89,7 @@ class LoanServiceTest {
     }
 
     @Test
-    void testCreateLoanWithInsufficientCreditLimit() throws Exception {
+    void testCreateLoanWithInsufficientCreditLimit()  {
         loanRequest.setLoanAmount(BigDecimal.valueOf(60000000));
 
         when(customerService.findCustomer(loanRequest.getCustomerId())).thenReturn(customer);
@@ -102,7 +102,7 @@ class LoanServiceTest {
     }
 
     @Test
-    void testPayLoan() throws Exception {
+    void testPayLoan()  {
         when(loanRepository.findByLoanId(1L)).thenReturn(Optional.of(loan));
         BigDecimal paymentAmount = BigDecimal.valueOf(250000);
 
@@ -113,7 +113,7 @@ class LoanServiceTest {
     }
 
     @Test
-    void testPayLoanWithInsufficientAmount() throws Exception {
+    void testPayLoanWithInsufficientAmount()  {
         when(loanRepository.findByLoanId(1L)).thenReturn(Optional.of(loan));
         BigDecimal paymentAmount = BigDecimal.valueOf(100);
 
@@ -125,7 +125,7 @@ class LoanServiceTest {
     }
 
     @Test
-    void testFindByLoanId() throws Exception {
+    void testFindByLoanId()  {
         when(loanRepository.findByLoanId(1L)).thenReturn(Optional.of(loan));
 
         Loan result = loanService.findByLoanId(1L);
@@ -135,7 +135,7 @@ class LoanServiceTest {
     }
 
     @Test
-    void testFindByLoanIdNotFound() throws Exception {
+    void testFindByLoanIdNotFound() {
         when(loanRepository.findByLoanId(999L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(Exception.class, () -> {

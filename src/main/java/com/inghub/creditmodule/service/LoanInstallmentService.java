@@ -21,7 +21,4 @@ public class LoanInstallmentService {
         return loanInstallmentRepository.findByInstallmentId(loanId);
     }
 
-    public List<LoanInstallment> findAllLoanInstallments() {
-        return loanInstallmentRepository.findAll();
-    }
 }

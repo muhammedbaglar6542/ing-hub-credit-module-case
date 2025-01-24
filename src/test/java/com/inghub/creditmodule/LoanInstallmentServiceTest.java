@@ -74,14 +74,5 @@ class LoanInstallmentServiceTest {
         verify(loanInstallmentRepository, times(1)).findByInstallmentId(installmentId);
     }
 
-    @Test
-    void testFindAllLoanInstallments() {
-        when(loanInstallmentRepository.findAll()).thenReturn(installmentList);
 
-        List<LoanInstallment> result = loanInstallmentService.findAllLoanInstallments();
-
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        verify(loanInstallmentRepository, times(1)).findAll();
-    }
 }

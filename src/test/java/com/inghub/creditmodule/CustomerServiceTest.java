@@ -53,7 +53,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void testFindCustomer_ExistingCustomer() throws Exception {
+    void testFindCustomer_ExistingCustomer()  {
         Long customerId = 1L;
         Customer customer = Customer.builder().customerId(customerId).build();
         when(customerRepository.findByCustomerId(customerId)).thenReturn(Optional.of(customer));
@@ -73,19 +73,4 @@ class CustomerServiceTest {
         verify(customerRepository, times(1)).findByCustomerId(customerId);
     }
 
-    @Test
-    void testFindAllCustomer() {
-        List<Customer> customers = new ArrayList<>();
-        customers.add(Customer.builder().customerId(1L).build());
-        customers.add(Customer.builder().customerId(2L).build());
-
-        when(customerRepository.findAll()).thenReturn(customers);
-
-        List<Customer> result = customerService.findAllCustomer();
-
-        assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(c -> c.getCustomerId() == 1L));
-        assertTrue(result.stream().anyMatch(c -> c.getCustomerId() == 2L));
-        verify(customerRepository, times(1)).findAll();
-    }
 }

@@ -32,7 +32,7 @@ public class LoanController {
     }
 
     @GetMapping("/find/{loanId}")
-    public ResponseEntity<Loan> findByLoanId(@PathVariable Long loanId) throws Exception {
+    public ResponseEntity<Loan> findByLoanId(@PathVariable Long loanId) {
         log.info("Fetching loan");
 
         return ResponseEntity.ok(loanService.findByLoanId(loanId));
@@ -48,10 +48,4 @@ public class LoanController {
         }
     }
 
-
-    @GetMapping("/findAll")
-    public ResponseEntity<List<Loan>> findAllLoan() throws Exception {
-        log.info("Fetching  all loan");
-        return ResponseEntity.ok(loanService.findAllLoan());
-    }
 }

@@ -1,5 +1,6 @@
 package com.inghub.creditmodule.service;
 
+import com.inghub.creditmodule.exceptions.*;
 import com.inghub.creditmodule.model.Customer;
 import com.inghub.creditmodule.model.Loan;
 import com.inghub.creditmodule.model.LoanInstallment;
@@ -28,7 +29,7 @@ public class LoanService {
     private final LoanInstallmentRepository loanInstallmentRepository;
     private final CustomerService customerService;
 
-    public void createLoan(LoanRequest loanRequest) throws Exception {
+    public void createLoan(LoanRequest loanRequest)   {
 
         Customer customer = customerService.findCustomer(loanRequest.getCustomerId());
 
@@ -94,42 +95,41 @@ public class LoanService {
     }
 
 
-    public Loan findByLoanId(Long loanId) throws Exception {
+    public Loan findByLoanId(Long loanId)  {
         Optional<Loan> loan = loanRepository.findByLoanId(loanId);
         if (loan.isEmpty()) {
-            throw new Exception("Loan not found!");
+            throw new LoanNotFoundException();
         }
         return loan.get();
     }
 
 
-    private void checkLoanCondition(LoanRequest loanRequest, BigDecimal availableLimit) throws Exception {
+    private void checkLoanCondition(LoanRequest loanRequest, BigDecimal availableLimit)   {
         checkCreditAvailability(loanRequest.getLoanAmount(), availableLimit);
         checkNumberOfInstallments(loanRequest.getNumberOfInstallment());
         checkInterestRange(loanRequest.getInterestRate());
     }
 
-    private void checkCreditAvailability(BigDecimal loanAmount, BigDecimal availableLimit) throws Exception {
-        if (availableLimit.compareTo(loanAmount) < 0) throw new Exception("Limit is not enough!");
+    private void checkCreditAvailability(BigDecimal loanAmount, BigDecimal availableLimit)   {
+        if (availableLimit.compareTo(loanAmount) < 0) throw new LimitIsNotEnoughException();
     }
 
-    private void checkNumberOfInstallments(Integer numberOfInstallment) throws Exception {
-        if (!NUMBER_OF_INSTALLMENTS.contains(numberOfInstallment))
-            throw new Exception("Installments should be 6, 9, 12, 24 !");
+    private void checkNumberOfInstallments(Integer numberOfInstallment)  {
+        if (!NUMBER_OF_INSTALLMENTS.contains(numberOfInstallment)) throw new FixNumberOfInstallmentException();
     }
 
-    private void checkInterestRange(BigDecimal interestRate) throws Exception {
+    private void checkInterestRange(BigDecimal interestRate)  {
         if (interestRate.compareTo(new BigDecimal("0.1")) < 0 || interestRate.compareTo(new BigDecimal("0.5")) > 0)
-            throw new Exception("Interest rate is not between 0.1 and 0.5 !");
+            throw new FixInterestRateException();
     }
 
 
-    public void payLoan(Long loanId, BigDecimal paymentAmount) throws Exception {
+    public void payLoan(Long loanId, BigDecimal paymentAmount)  {
         Loan loan = findByLoanId(loanId);
-        if (loan.isPaid()) throw new Exception("Loan is paid!");
+        if (loan.isPaid()) throw new LoanIsPaidException();
 
         if (paymentAmount.compareTo(loan.getLoanInstallments().get(0).getAmount()) < 0)
-            throw new Exception("The payment amount entered is not sufficient!");
+            throw new PaymentAmountIsNotSufficientException();
 
         payInstallments(loan, paymentAmount);
 
@@ -169,6 +169,7 @@ public class LoanService {
         }
     }
 
+    // calculate reward and penalty for payment  bonus-2
     private BigDecimal calculatePayment(BigDecimal fixedAmount, LocalDate dueDate) {
         long daysBetween = DAYS.between(LocalDate.now(), dueDate);
 
@@ -187,8 +188,4 @@ public class LoanService {
         return loan.getLoanInstallments().stream().filter(LoanInstallment::isPaid).toList().size() == loan.getNumberOfInstallment();
     }
 
-
-    public List<Loan> findAllLoan() {
-        return loanRepository.findAll();
-    }
 }

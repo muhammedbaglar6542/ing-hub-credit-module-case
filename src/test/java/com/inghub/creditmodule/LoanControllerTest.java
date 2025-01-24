@@ -74,15 +74,4 @@ public class LoanControllerTest {
 
     }
 
-
-    @Test
-    public void testFindAllLoan() throws Exception {
-        List<Loan> loans = Arrays.asList(new Loan(), new Loan());
-        when(loanService.findAllLoan()).thenReturn(loans);
-
-        mockMvc.perform(get("/api/loan/findAll"))
-                .andExpect(status().isOk());
-
-        verify(loanService, times(1)).findAllLoan();
-    }
 }

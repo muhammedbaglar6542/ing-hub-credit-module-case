@@ -36,10 +36,4 @@ public class LoanInstallmentController {
         return ResponseEntity.ok(loanInstallmentService.findByLoanId(loanId));
     }
 
-
-    @GetMapping("/findAll")
-    public ResponseEntity<List<LoanInstallment>> findAllLoanInstallments() throws Exception {
-        log.info("Fetching  all loan installment");
-        return ResponseEntity.ok(loanInstallmentService.findAllLoanInstallments());
-    }
 }

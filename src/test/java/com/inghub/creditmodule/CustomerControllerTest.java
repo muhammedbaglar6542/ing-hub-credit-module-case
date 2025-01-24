@@ -57,14 +57,6 @@ public class CustomerControllerTest {
         verify(customerService, times(1)).findCustomer(customerId);
     }
 
-    @Test
-    public void testFindAllCustomer() throws Exception {
-        List<Customer> customers = Arrays.asList(new Customer(), new Customer());
-        when(customerService.findAllCustomer()).thenReturn(customers);
 
-        mockMvc.perform(get("/api/customer/findAll")).andExpect(status().isOk());
-
-        verify(customerService, times(1)).findAllCustomer();
-    }
 
 }
